@@ -20,7 +20,7 @@ export default {
     let vm = this;
     if (
       localStorage.getItem("isSign") != "true" ||
-      localStorage.getItem("roleName") != "ROLE_HOST"
+      localStorage.getItem("roleName") != "ROLE_MANAGER"
     ) {
       vm.$router.replace("/error/403");
     }

@@ -41,6 +41,7 @@
                         height="85"
                         hide-details="auto"
                         placeholder="Enter a destination or property"
+                        v-on:keyup.enter="searchHome()"
                         outlined
                       />
                     </v-row>
@@ -107,12 +108,17 @@
                     <v-row style="margin-top: 10px">
                       <v-combobox
                         style="background-color: white;"
-                        v-model="people.selectCBB"
+                        v-model="guest.selectCBB"
                         height="85"
-                        :items="people.itemCBBs"
+                        :items="guest.itemCBBs"
                         outlined
                       ></v-combobox>
-                      <v-btn height="85" width="180" color="primary" v-on:click="searchHome()">SEARCH</v-btn>
+                      <v-btn
+                        height="85"
+                        width="180"
+                        color="primary"
+                        v-on:click="searchHome()"
+                      >SEARCH</v-btn>
                     </v-row>
                   </v-container>
                   <v-row
@@ -144,7 +150,7 @@ export default {
         textSearch: "",
         from: "",
         to: "",
-        people: ""
+        guest: ""
       },
       tabs: {
         tabItems: null,
@@ -154,13 +160,13 @@ export default {
           { id: 3, tab: "Flights" }
         ]
       },
-      people: {
-        selectCBB: { count: 2, text: "2 peoples" },
+      guest: {
+        selectCBB: { count: 2, text: "2 guest" },
         itemCBBs: [
-          { count: 1, text: "1 peoples" },
-          { count: 2, text: "2 peoples" },
-          { count: 3, text: "3 peoples" },
-          { count: 4, text: "4 peoples" }
+          { count: 1, text: "1 guest" },
+          { count: 2, text: "2 guest" },
+          { count: 3, text: "3 guest" },
+          { count: 4, text: "4 guest" }
         ]
       },
       date: {
@@ -173,60 +179,36 @@ export default {
     };
   },
   methods: {
-    async searchHome() {
+    searchHome() {
       let vm = this;
-      var query = {
-        query: {
-          bool: {
-            should: [
-              {
-                match: {
-                  cityName: vm.search.textSearch
-                }
-              },
-              {
-                match: {
-                  stateName: vm.search.textSearch
-                }
-              },
-              {
-                match: {
-                  districtName: vm.search.textSearch
-                }
-              },
-              {
-                match: {
-                  villageName: vm.search.textSearch
-                }
-              }
-            ],
-            must: [
-              {
-                match: {
-                  _type: "Home"
-                }
-              }
-            ]
-          }
-        }
-      };
-      await vm.searchAPI(query);
-    },
-    searchAPI(body) {
-      return new Promise((resolve, reject) => {
-        this.$axios
-          .post(`http://localhost:8080/booking/api/v1/es`, body, {
-            headers: {
-              Authorization: "Basic " + localStorage.getItem("token")
-            }
-          })
-          .then(function(response) {
-            resolve(response.data);
-          })
-          .catch(err => {
-            reject(err);
-          });
-      });
+      let link = "/search";
+      if (link === "/search" && vm.search.textSearch) {
+        link = link + "?text=" + vm.search.textSearch;
+      } else if (link && link != "/search" && vm.search.textSearch) {
+        link = link + "&text=" + vm.search.textSearch;
+      }
+
+      if (link === "/search" && vm.search.from) {
+        link = link + "?from=" + vm.search.from;
+      } else if (link && link != "/search" && vm.search.from) {
+        link = link + "&from=" + vm.search.from;
+      }
+
+      if (link === "/search" && vm.search.to) {
+        link = link + "?to=" + vm.search.to;
+      } else if (link && link != "/search" && vm.search.to) {
+        link = link + "&to=" + vm.search.to;
+      }
+
+      if (link === "/search" && vm.guest.selectCBB.count) {
+        link = link + "?guest=" + vm.guest.selectCBB.count;
+      } else if (link && link != "/search" && vm.guest.selectCBB.count) {
+        link = link + "&guest=" + vm.guest.selectCBB.count;
+      }
+
+      if (vm.search.textSearch) {
+        this.$router.push(link);
+      }
     }
   },
   computed: {

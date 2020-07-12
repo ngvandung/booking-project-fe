@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <host-app-bar />
+    <admin-app-bar />
 
     <base-view />
 
@@ -10,9 +10,10 @@
 
 <script>
 export default {
-  name: "HostLayout",
+  name: "AdminLayout",
+
   components: {
-    HostAppBar: () => import("@/layouts/host/AppBar"),
+    AdminAppBar: () => import("@/layouts/admin/AppBar"),
     Footer: () => import("@/components/Footer"),
     BaseView: () => import("@/components/BaseView")
   },
@@ -20,7 +21,7 @@ export default {
     let vm = this;
     if (
       localStorage.getItem("isSign") != "true" ||
-      localStorage.getItem("roleName") != "ROLE_HOST"
+      localStorage.getItem("roleName") != "ROLE_ADMIN"
     ) {
       vm.$router.replace("/error/403");
     }
@@ -29,4 +30,5 @@ export default {
 </script>
 
 <style>
+
 </style>
