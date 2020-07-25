@@ -109,10 +109,11 @@
 </template>
 
 <script>
+import SlideShowHome from "@/components/SlideShowHome";
 export default {
   name: "HostHome",
   components: {
-    SlideShowHome: () => import("@/components/SlideShowHome")
+    SlideShowHome
   },
   data() {
     return {
@@ -193,7 +194,7 @@ export default {
       let vm = this;
       vm.refCityId = vm.city.selected.cityId;
       vm.$axios
-        .get(`http://localhost:8080/booking/api/v1/districts`, {
+        .get(`/booking/api/v1/districts`, {
           params: { cityId: vm.refCityId, start: 0, end: 5000 }
         })
         .then(response => {
@@ -207,7 +208,7 @@ export default {
       let vm = this;
       vm.refDistrictId = vm.district.selected.districtId;
       vm.$axios
-        .get(`http://localhost:8080/booking/api/v1/villages`, {
+        .get(`/booking/api/v1/villages`, {
           params: { districtId: vm.refDistrictId, start: 0, end: 5000 }
         })
         .then(response => {
@@ -250,7 +251,7 @@ export default {
 
       if (vm.homeId) {
         await vm.$axios
-          .put(`http://localhost:8080/booking/api/v1/home`, data, {
+          .put(`/booking/api/v1/home`, data, {
             headers: {
               Authorization: localStorage.getItem("jwtToken")
             }
@@ -272,16 +273,12 @@ export default {
           formData.append("className", "com.booking.model.Home");
           formData.append("classPK", vm.classPK);
           await vm.$axios
-            .post(
-              "http://localhost:8080/booking/api/v1/updatefileentry",
-              formData,
-              {
-                headers: {
-                  "Content-Type": "multipart/form-data",
-                  Authorization: localStorage.getItem("jwtToken")
-                }
+            .post("/booking/api/v1/updatefileentry", formData, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: localStorage.getItem("jwtToken")
               }
-            )
+            })
             .then(() => {
               vm.$router.push("/host/homes");
               vm.$router.go();
@@ -292,14 +289,14 @@ export default {
         }
       } else {
         await vm.$axios
-          .post(`http://localhost:8080/booking/api/v1/home`, data, {
+          .post(`/booking/api/v1/home`, data, {
             headers: {
               Authorization: localStorage.getItem("jwtToken")
             }
           })
           .then(response => {
             vm.classPK = response.data.homeId;
-            if(vm.classPK){
+            if (vm.classPK) {
               alert("Successfully");
             }
           })
@@ -317,7 +314,7 @@ export default {
           formData.append("className", "com.booking.model.Home");
           formData.append("classPK", vm.classPK);
           await vm.$axios
-            .post("http://localhost:8080/booking/api/v1/fileentry", formData, {
+            .post("/booking/api/v1/fileentry", formData, {
               headers: {
                 "Content-Type": "multipart/form-data",
                 Authorization: localStorage.getItem("jwtToken")
@@ -351,7 +348,7 @@ export default {
     vm.homeId = this.$route.params.homeId;
     if (vm.homeId) {
       vm.$axios
-        .get(`http://localhost:8080/booking/api/v1/home/` + vm.homeId, {
+        .get(`/booking/api/v1/home/` + vm.homeId, {
           headers: {
             Authorization: localStorage.getItem("jwtToken")
           }
@@ -391,7 +388,7 @@ export default {
 
     let vm = this;
     vm.$axios
-      .get(`http://localhost:8080/booking/api/v1/states`, {
+      .get(`/booking/api/v1/states`, {
         params: { start: 0, end: 5000 }
       })
       .then(response => {
@@ -402,7 +399,7 @@ export default {
       });
 
     vm.$axios
-      .get(`http://localhost:8080/booking/api/v1/citys`, {
+      .get(`/booking/api/v1/citys`, {
         params: { start: 0, end: 5000 }
       })
       .then(response => {
@@ -413,7 +410,7 @@ export default {
       });
 
     vm.$axios
-      .get(`http://localhost:8080/booking/api/v1/districts`, {
+      .get(`/booking/api/v1/districts`, {
         params: { start: 0, end: 5000 }
       })
       .then(response => {
@@ -424,7 +421,7 @@ export default {
       });
 
     vm.$axios
-      .get(`http://localhost:8080/booking/api/v1/villages`, {
+      .get(`/booking/api/v1/villages`, {
         params: { start: 0, end: 5000 }
       })
       .then(response => {
@@ -435,7 +432,7 @@ export default {
       });
 
     vm.$axios
-      .get(`http://localhost:8080/booking/api/v1/hometypes`, {
+      .get(`/booking/api/v1/hometypes`, {
         params: { start: 0, end: 5000 }
       })
       .then(response => {
@@ -448,10 +445,7 @@ export default {
     vm.homeId = this.$route.params.homeId;
     if (vm.homeId) {
       vm.$axios
-        .get(
-          `http://localhost:8080/booking/api/v1/image/com.booking.model.Home/` +
-            vm.homeId
-        )
+        .get(`/booking/api/v1/image/com.booking.model.Home/` + vm.homeId)
         .then(response => {
           vm.homeImages = response.data.data;
         })

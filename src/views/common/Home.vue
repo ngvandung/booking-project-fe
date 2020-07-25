@@ -8,10 +8,20 @@
             <v-breadcrumbs :items="items" large></v-breadcrumbs>
           </div>
           <div class="d-flex align-lg-center">
-            <span>Share</span>
-            <span style="margin-left: 5px" class="material-icons">share</span>
-            <span style="margin-left: 15px">Save</span>
-            <span style="margin-left: 5px" class="material-icons">favorite_border</span>
+            <v-btn small width="70" text @click="sharing">
+              <span>Share</span>
+              <span style="margin-left: 3px" class="material-icons">share</span>
+            </v-btn>
+            <v-btn :disabled="highLightVote" small width="70" text @click="voting">
+              <span v-if="highLightVote" style="color: #e97575">Like</span>
+              <span v-else>Like</span>
+              <span
+                v-if="highLightVote"
+                style="margin-left: 3px; color: #e97575;"
+                class="material-icons"
+              >favorite_border</span>
+              <span v-else style="margin-left: 3px" class="material-icons">favorite_border</span>
+            </v-btn>
           </div>
         </div>
         <v-col cols="12" lg="8">
@@ -93,33 +103,69 @@
                 </v-col>
               </template>
             </div>
-            <!-- <p
+            <p
               class="font-weight-bold"
               style="font-size: 1.25rem; margin-top: 20px"
             >Kitchen Facilities</p>
-            <div style="margin-top: 20px" class="d-flex justify-space-between">
-              <div class="d-flex align-lg-center">
-                <span class="material-icons" style="margin-right: 5px">wifi</span>Wifi
-              </div>
-              <div class="d-flex align-lg-center">
-                <span class="material-icons" style="margin-right: 5px">wifi</span>Wifi
-              </div>
-              <div class="d-flex align-lg-center">
-                <span class="material-icons" style="margin-right: 5px">wifi</span>Wifi
-              </div>
+            <div class="d-flex justify-space-between">
+              <template v-if="home.isHairDryer || home.isMicroWave || home.isMicroWave">
+                <v-col cols="12" lg="4">
+                  <template v-if="home.isHairDryer">
+                    <div class="d-flex align-lg-center margin-bot-custom">
+                      <span class="material-icons" style="margin-right: 5px">wifi</span>Hair Dryer
+                    </div>
+                  </template>
+                  <template v-if="home.isMicroWave">
+                    <div class="d-flex align-lg-center margin-bot-custom">
+                      <span class="material-icons" style="margin-right: 5px">wifi</span>Micro Wave
+                    </div>
+                  </template>
+                  <template v-if="home.isMicroWave">
+                    <div class="d-flex align-lg-center margin-bot-custom">
+                      <span class="material-icons" style="margin-right: 5px">wifi</span>Micro Wave
+                    </div>
+                  </template>
+                </v-col>
+              </template>
+              <template v-if="home.isFridge || home.isBalcony">
+                <v-col cols="12" lg="4">
+                  <template v-if="home.isFridge">
+                    <div class="d-flex align-lg-center margin-bot-custom">
+                      <span class="material-icons" style="margin-right: 5px">wifi</span>Fridge
+                    </div>
+                  </template>
+                  <template v-if="home.isBalcony">
+                    <div class="d-flex align-lg-center margin-bot-custom">
+                      <span class="material-icons" style="margin-right: 5px">wifi</span>Balcony
+                    </div>
+                  </template>
+                  <template v-if="true">
+                    <div class="d-flex align-lg-center margin-bot-custom">
+                      <span class="material-icons" style="margin-right: 5px">wifi</span>Napkins
+                    </div>
+                  </template>
+                </v-col>
+              </template>
+              <template v-if="home.isWindows || home.isSmartTv || home.isExtraMattress">
+                <v-col cols="12" lg="4">
+                  <template v-if="true">
+                    <div class="d-flex align-lg-center margin-bot-custom">
+                      <span class="material-icons" style="margin-right: 5px">wifi</span>Windows
+                    </div>
+                  </template>
+                  <template v-if="home.isShampoo">
+                    <div class="d-flex align-lg-center margin-bot-custom">
+                      <span class="material-icons" style="margin-right: 5px">wifi</span>SmartTv
+                    </div>
+                  </template>
+                  <template v-if="home.Toiletries">
+                    <div class="d-flex align-lg-center margin-bot-custom">
+                      <span class="material-icons" style="margin-right: 5px">wifi</span>ExtraMattress
+                    </div>
+                  </template>
+                </v-col>
+              </template>
             </div>
-            <p class="font-weight-bold" style="font-size: 1.25rem; margin-top: 20px">Entertainment</p>
-            <div style="margin-top: 20px" class="d-flex justify-space-between">
-              <div class="d-flex align-lg-center">
-                <span class="material-icons" style="margin-right: 5px">wifi</span>Wifi
-              </div>
-              <div class="d-flex align-lg-center">
-                <span class="material-icons" style="margin-right: 5px">wifi</span>Wifi
-              </div>
-              <div class="d-flex align-lg-center">
-                <span class="material-icons" style="margin-right: 5px">wifi</span>Wifi
-              </div>
-            </div> -->
           </v-responsive>
         </v-col>
         <v-col cols="12" lg="4" style="padding: 12px 0 12px 20px!important;">
@@ -208,6 +254,19 @@
           </v-card>
         </v-col>
       </v-row>
+      <v-responsive v-if="home.linkGoogleMap" class="map-area">
+        <p class="font-weight-bold" style="font-size: 1.25rem;">Google map</p>
+        <iframe
+          :src="home.linkGoogleMap"
+          width="100%"
+          height="450"
+          frameborder="0"
+          style="border:0;"
+          allowfullscreen
+          aria-hidden="false"
+          tabindex="0"
+        ></iframe>
+      </v-responsive>
       <v-divider style="margin: 20px 0;"></v-divider>
       <v-responsive class="comment-area">
         <v-row>
@@ -245,9 +304,10 @@
 </template>
 
 <script>
+import SlideShowHome from "@/components/SlideShowHome";
 export default {
   components: {
-    SlideShowHome: () => import("@/components/SlideShowHome")
+    SlideShowHome,
   },
   data() {
     return {
@@ -262,7 +322,7 @@ export default {
         phone: "",
         birthDay: "",
         description: "",
-        avatar: ""
+        avatar: "",
       },
       homeImages: [],
       items: [],
@@ -300,7 +360,7 @@ export default {
         isBalcony: false,
         isWindows: false,
         isSmartTv: false,
-        isExtraMattress: false
+        isExtraMattress: false,
       },
       guest: {
         selectCBB: { count: 2, text: "2 guest" },
@@ -308,14 +368,14 @@ export default {
           { count: 1, text: "1 guest" },
           { count: 2, text: "2 guest" },
           { count: 3, text: "3 guest" },
-          { count: 4, text: "4 guest" }
-        ]
+          { count: 4, text: "4 guest" },
+        ],
       },
       date: {
         fromDate: new Date().toISOString().substr(0, 10),
         toDate: new Date().toISOString().substr(0, 10),
         fromMenu: false,
-        toMenu: false
+        toMenu: false,
       },
       isPrice: false,
       bookingPrice: 0,
@@ -323,10 +383,11 @@ export default {
       comment: {
         classPK: 0,
         className: "",
-        content: ""
+        content: "",
       },
       userComments: [],
-      isRequest: false
+      isRequest: false,
+      highLightVote: false,
     };
   },
   methods: {
@@ -350,6 +411,70 @@ export default {
           vm.bookingPrice = price;
           vm.isPrice = true;
         }
+        let query = {
+          indice: "Booking",
+          size: 10000,
+          query: {
+            bool: {
+              must: [
+                {
+                  match: {
+                    _type: "Booking",
+                  },
+                },
+                {
+                  match: {
+                    classPK: vm.$route.params.homeId,
+                  },
+                },
+                {
+                  match: {
+                    className: "com.booking.model.Home",
+                  },
+                },
+                {
+                  match: {
+                    bookingStatus: "renting",
+                  },
+                },
+                {
+                  bool: {
+                    should: [
+                      {
+                        range: {
+                          fromDate: {
+                            gte: vm.toTimestamp(vm.date.fromDate),
+                            lte: vm.toTimestamp(vm.date.toDate),
+                          },
+                        },
+                      },
+                      {
+                        range: {
+                          toDate: {
+                            lte: vm.toTimestamp(vm.date.fromDate),
+                            gte: vm.toTimestamp(vm.date.toDate),
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        };
+        vm.$axios
+          .post(`/booking/api/v1/_search`, query)
+          .then((response) => {
+            if (response.data.hits.hits.length > 0) {
+              vm.isRequest = true;
+            } else {
+              vm.isRequest = false;
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     },
     requestToBook() {
@@ -359,14 +484,14 @@ export default {
         classPK: homeId,
         numberOfGuest: vm.guest.selectCBB.count,
         fromDate: vm.date.fromDate,
-        toDate: vm.date.toDate
+        toDate: vm.date.toDate,
       };
       if (booking.toDate > booking.fromDate) {
         vm.$router.push({
           name: "PaymentView",
           params: {
-            bookingInfo: booking
-          }
+            bookingInfo: booking,
+          },
         });
       } else {
         alert("Chọn lại ngày!");
@@ -377,82 +502,107 @@ export default {
       vm.comment.classPK = vm.$route.params.homeId;
       vm.comment.className = "com.booking.model.Home";
       vm.$axios
-        .post(`http://localhost:8080/booking/api/v1/comment`, vm.comment, {
+        .post(`/booking/api/v1/comment`, vm.comment, {
           headers: {
-            Authorization: localStorage.getItem("jwtToken")
-          }
+            Authorization: localStorage.getItem("jwtToken"),
+          },
         })
-        .then(response => {
+        .then((response) => {
           console.log(response);
           vm.$router.go();
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
-    }
+    },
+    toTimestamp(strDate) {
+      return Date.parse(strDate);
+    },
+    sharing() {},
+    voting() {
+      let vm = this;
+      let voting = {
+        className: "com.booking.model.Home",
+        classPK: vm.$route.params.homeId,
+        star: 1,
+      };
+      let options = {
+        method: "POST",
+        url: `/booking/api/v1/voting`,
+        data: voting,
+        headers: { Authorization: localStorage.getItem("jwtToken") },
+      };
+      vm.$axios(options)
+        .then((response) => {
+          if (response.data) {
+            vm.highLightVote = true;
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
   },
-  beforeCreate: function() {
+  created: function () {
     let vm = this;
 
     let userId = localStorage.getItem("userId");
     vm.$axios
-      .get(`http://localhost:8080/booking/api/v1/user/` + userId, {
+      .get(`/booking/api/v1/user/` + userId, {
         headers: {
-          Authorization: localStorage.getItem("jwtToken")
-        }
+          Authorization: localStorage.getItem("jwtToken"),
+        },
       })
-      .then(response => {
+      .then((response) => {
         if (response.data) {
           vm.user = response.data;
         }
       })
-      .catch(e => {
+      .catch((e) => {
         vm.errors.push(e);
       });
     vm.$axios
       .get(
-        `http://localhost:8080/booking/api/v1/image/com.booking.model.Home/` +
+        `/booking/api/v1/image/com.booking.model.Home/` +
           vm.$route.params.homeId
       )
-      .then(response => {
+      .then((response) => {
         vm.homeImages = response.data.data;
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
 
     vm.$axios
-      .get(
-        `http://localhost:8080/booking/api/v1/home/` + vm.$route.params.homeId
-      )
-      .then(response => {
+      .get(`/booking/api/v1/home/` + vm.$route.params.homeId)
+      .then((response) => {
         vm.home = response.data;
         let state = {
           text: vm.home.stateName,
           disabled: false,
-          href: ""
+          href: "",
         };
         let city = {
           text: vm.home.cityName,
           disabled: false,
-          href: ""
+          href: "",
         };
         let district = {
           text: vm.home.districtName,
           disabled: false,
-          href: ""
+          href: "",
         };
         let village = {
           text: vm.home.villageName,
           disabled: true,
-          href: ""
+          href: "",
         };
         vm.items.push(state);
         vm.items.push(city);
         vm.items.push(district);
         vm.items.push(village);
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
 
@@ -463,72 +613,174 @@ export default {
           must: [
             {
               match: {
-                _type: "Comment"
-              }
+                _type: "Comment",
+              },
             },
             {
               match: {
-                classPK: vm.$route.params.homeId
-              }
+                classPK: vm.$route.params.homeId,
+              },
             },
             {
               match: {
-                className: "com.booking.model.Home"
-              }
-            }
-          ]
-        }
-      }
+                className: "com.booking.model.Home",
+              },
+            },
+          ],
+        },
+      },
     };
     vm.$axios
-      .post(`http://localhost:8080/booking/api/v1/_search`, query)
-      .then(response => {
+      .post(`/booking/api/v1/_search`, query)
+      .then((response) => {
         vm.userComments = response.data.hits.hits;
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
 
     var query2 = {
       indice: "Booking",
+      size: 10000,
+      query: {
+        bool: {
+          should: [
+            {
+              bool: {
+                must: [
+                  {
+                    match: {
+                      _type: "Booking",
+                    },
+                  },
+                  {
+                    match: {
+                      classPK: vm.$route.params.homeId,
+                    },
+                  },
+                  {
+                    match: {
+                      className: "com.booking.model.Home",
+                    },
+                  },
+                  {
+                    match: {
+                      bookingStatus: "renting",
+                    },
+                  },
+                  {
+                    bool: {
+                      should: [
+                        {
+                          range: {
+                            fromDate: {
+                              gte: vm.toTimestamp(vm.date.fromDate),
+                              lte: vm.toTimestamp(vm.date.toDate),
+                            },
+                          },
+                        },
+                        {
+                          range: {
+                            toDate: {
+                              lte: vm.toTimestamp(vm.date.fromDate),
+                              gte: vm.toTimestamp(vm.date.toDate),
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+            {
+              bool: {
+                must: [
+                  {
+                    match: {
+                      _type: "Home",
+                    },
+                  },
+                  {
+                    match: {
+                      homeId: vm.$route.params.homeId,
+                    },
+                  },
+                  {
+                    bool: {
+                      should: [
+                        {
+                          match: {
+                            isActive: 0,
+                          },
+                        },
+                        {
+                          match: {
+                            isActive: 2,
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    };
+    vm.$axios
+      .post(`/booking/api/v1/_search`, query2)
+      .then((response) => {
+        if (response.data.hits.hits.length > 0) {
+          vm.isRequest = true;
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    let queryVote = {
+      indice: "Voting",
+      size: 10000,
       query: {
         bool: {
           must: [
             {
               match: {
-                _type: "Booking"
-              }
+                _type: "Voting",
+              },
             },
             {
               match: {
-                classPK: vm.$route.params.homeId
-              }
+                className: "com.booking.model.Home",
+              },
             },
             {
               match: {
-                className: "com.booking.model.Home"
-              }
+                classPK: vm.$route.params.homeId,
+              },
             },
             {
               match: {
-                bookingStatus: "renting"
-              }
-            }
-          ]
-        }
-      }
+                userId: localStorage.getItem("userId"),
+              },
+            },
+          ],
+        },
+      },
     };
     vm.$axios
-      .post(`http://localhost:8080/booking/api/v1/_search`, query2)
-      .then(response => {
+      .post(`/booking/api/v1/_search`, queryVote)
+      .then((response) => {
         if (response.data.hits.hits.length > 0) {
-          vm.isRequest = true;
+          vm.highLightVote = true;
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
-  }
+  },
 };
 </script>
 

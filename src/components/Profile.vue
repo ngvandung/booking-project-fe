@@ -8,6 +8,7 @@
         <v-divider></v-divider>
         <v-stepper-step v-if="roleName == 'ROLE_HOST'" step="3">Change Password</v-stepper-step>
         <v-stepper-step v-else step="2">Change Password</v-stepper-step>
+        <v-progress-linear indeterminate color="primary" v-if="loading"></v-progress-linear>
       </v-stepper-header>
       <v-stepper-items>
         <v-stepper-content step="1">
@@ -159,20 +160,22 @@ export default {
       stepper: 1,
       currentPassword: "",
       newPassword: "",
-      confirmPassword: ""
+      confirmPassword: "",
+      loading: true
     };
   },
   beforeMount: function() {
     let vm = this;
     let userId = localStorage.getItem("userId");
     vm.$axios
-      .get(`http://localhost:8080/booking/api/v1/user/` + userId, {
+      .get(`/booking/api/v1/user/` + userId, {
         headers: {
           Authorization: localStorage.getItem("jwtToken")
         }
       })
       .then(response => {
         if (response.data) {
+          vm.loading = false;
           vm.user = response.data;
         }
       })
@@ -189,7 +192,7 @@ export default {
 
       await vm.$axios
         .post(
-          `http://localhost:8080/booking/api/v1/user/` +
+          `/booking/api/v1/user/` +
             vm.user.userId +
             "/avatar",
           formData,
@@ -218,7 +221,7 @@ export default {
           let userId = localStorage.getItem("userId");
           vm.$axios
             .post(
-              `http://localhost:8080/booking/api/v1/user/` + userId,
+              `/booking/api/v1/user/` + userId,
               formData,
               {
                 headers: {
@@ -238,7 +241,7 @@ export default {
         }
       }
       vm.$axios
-        .put(`http://localhost:8080/booking/api/v1/user`, vm.user, {
+        .put(`/booking/api/v1/user`, vm.user, {
           headers: {
             Authorization: localStorage.getItem("jwtToken")
           }

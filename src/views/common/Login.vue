@@ -70,7 +70,7 @@ export default {
     login() {
       let vm = this;
       vm.$axios
-        .post(`http://localhost:8080/booking/api/v1/login`, vm.user)
+        .post(`/booking/api/v1/login`, vm.user)
         .then(response => {
           if (response.data.code == 200) {
             localStorage.setItem("jwtToken", response.data.jwtToken);

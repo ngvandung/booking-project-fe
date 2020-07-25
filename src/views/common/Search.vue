@@ -3,8 +3,9 @@
 </template>
 
 <script>
+import ListHouse from "@/components/ListHouse";
 export default {
-  components: { ListHouse: () => import("@/components/ListHouse") },
+  components: { ListHouse },
   data() {
     return {
       homes: [],
@@ -19,6 +20,7 @@ export default {
     let vm = this;
     var query = {
       indice: "Home",
+      size: "10000",
       query: {
         bool: {
           must: [

@@ -1,20 +1,15 @@
 <template>
   <v-app>
-    <host-app-bar />
-
     <base-view />
-
-    <Footer />
   </v-app>
 </template>
 
 <script>
+import BaseView from "@/components/BaseView";
 export default {
   name: "HostLayout",
   components: {
-    HostAppBar: () => import("@/layouts/host/AppBar"),
-    Footer: () => import("@/components/Footer"),
-    BaseView: () => import("@/components/BaseView")
+    BaseView
   },
   beforeCreate: function() {
     let vm = this;

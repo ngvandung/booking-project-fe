@@ -9,13 +9,16 @@
 </template>
 
 <script>
+import HomeAppBar from "@/layouts/common/AppBar";
+import Footer from "@/components/Footer";
+import BaseView from "@/components/BaseView";
 export default {
   name: "HomeLayout",
 
   components: {
-    HomeAppBar: () => import("@/layouts/common/AppBar"),
-    Footer: () => import("@/components/Footer"),
-    BaseView: () => import("@/components/BaseView")
+    HomeAppBar,
+    Footer,
+    BaseView
   }
 };
 </script>

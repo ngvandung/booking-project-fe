@@ -20,31 +20,31 @@ export default {
       listIndex: [
         {
           title: "State Category",
-          api: "http://localhost:8080/booking/api/v1/state/indexing"
+          api: "/booking/api/v1/state/indexing"
         },
         {
           title: "City Category",
-          api: "http://localhost:8080/booking/api/v1/city/indexing"
+          api: "/booking/api/v1/city/indexing"
         },
         {
           title: "District Category",
-          api: "http://localhost:8080/booking/api/v1/district/indexing"
+          api: "/booking/api/v1/district/indexing"
         },
         {
           title: "Village Category",
-          api: "http://localhost:8080/booking/api/v1/village/indexing"
+          api: "/booking/api/v1/village/indexing"
         },
         {
           title: "Home Type",
-          api: "http://localhost:8080/booking/api/v1/hometype/indexing"
+          api: "/booking/api/v1/hometype/indexing"
         },
         {
           title: "Home",
-          api: "http://localhost:8080/booking/api/v1/home/indexing"
+          api: "/booking/api/v1/home/indexing"
         },
         {
           title: "User",
-          api: "http://localhost:8080/booking/api/v1/user/indexing"
+          api: "/booking/api/v1/user/indexing"
         }
       ]
     };

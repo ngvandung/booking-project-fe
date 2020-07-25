@@ -3,27 +3,42 @@
 </template>
 
 <script>
+import DrawnerBar from "@/components/DrawnerBar.vue";
 export default {
-  components: { DrawnerBar: () => import("@/components/DrawnerBar.vue") },
+  components: { DrawnerBar },
   data() {
     return {
       tabs: {
         items: [
           {
             title: "My Bookings",
-            router: "/me/bookings"
+            router: "/me/bookings",
+            icon: "assignment",
+            subMenus: [
+              {
+                title: "Home",
+                router: "/me/bookings?className=com.booking.model.Home"
+              },
+              {
+                title: "Test",
+                router: "/me/bookings"
+              }
+            ]
           },
           {
             title: "Messages",
-            router: "/hdfdsfds"
+            router: "/hdfdsfds",
+            icon: "chat"
           },
           {
             title: "Account Setting",
-            router: "/me/edit-account/profile"
+            router: "/me/edit-account/profile",
+            icon: "account_circle"
           },
           {
             title: "Wishlist",
-            router: "/dsdsdsff"
+            router: "/dsdsdsff",
+            icon: "dns"
           }
         ]
       }

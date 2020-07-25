@@ -4,7 +4,7 @@
       <v-carousel-item v-for="(image, i) in images" :key="i">
         <v-sheet height="100%">
           <v-row class="fill-height" align="center" justify="center">
-            <v-img max-height="400" :src="'http://localhost:8080/booking/images/' + image"></v-img>
+            <v-img max-height="400" :src="'/booking/images/' + image"></v-img>
           </v-row>
         </v-sheet>
       </v-carousel-item>

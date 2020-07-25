@@ -3,14 +3,16 @@
 </template>
 
 <script>
+import ListHouse from "@/components/ListHouse";
 export default {
   components: {
-    ListHouse: () => import("@/components/ListHouse")
+    ListHouse
   },
   data() {
     return {
       query: {
         indice: "Home",
+        size: "10000",
         query: {
           bool: {
             must: [

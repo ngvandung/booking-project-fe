@@ -3,17 +3,29 @@
 </template>
 
 <script>
+import DrawnerBar from "@/components/DrawnerBar.vue";
 export default {
-  components: { DrawnerBar: () => import("@/components/DrawnerBar.vue") },
+  components: { DrawnerBar },
   data() {
     return {
       roleName: localStorage.getItem("roleName"),
       tabs: {
-        //items: [{ title: "Dashboard", router: "/admin/dashboard" }]
-      }
+        items: [
+          {
+            title: "List Users",
+            router: "/admin/users",
+            icon: "supervisor_account",
+          },
+          {
+            title: "Indexing",
+            router: "/admin/indexing",
+            icon: "list",
+          },
+        ],
+      },
     };
   },
-  beforeCreate: function() {
+  beforeCreate: function () {
     let vm = this;
     if (
       localStorage.getItem("isSign") != "true" ||
@@ -21,7 +33,7 @@ export default {
     ) {
       vm.$router.replace("/error/403");
     }
-  }
+  },
 };
 </script>
 

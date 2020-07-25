@@ -1,5 +1,5 @@
 <template>
-  <data-table :dt="hostUsers">
+  <data-table :dt="hostUsers" ref="dataTable">
     <template v-slot:data-table-title>
       <v-chip class="ma-2" color="#2196F3" label outlined>Hosts are pending</v-chip>
     </template>
@@ -28,8 +28,9 @@
 </template>
 
 <script>
+import DataTable from "@/components/DataTable.vue";
 export default {
-  components: { DataTable: () => import("@/components/DataTable") },
+  components: { DataTable },
   data() {
     return {
       hostUsers: {
@@ -51,7 +52,7 @@ export default {
       const options = {
         method: "PUT",
         headers: { Authorization: localStorage.getItem("jwtToken") },
-        url: "http://localhost:8080/booking/api/v1/user/action/" + _userId,
+        url: "/booking/api/v1/user/action/" + _userId,
         params: { status: _status }
       };
       vm.$axios(options)
@@ -66,7 +67,7 @@ export default {
   mounted: function() {
     let vm = this;
     vm.$axios
-      .get(`http://localhost:8080/booking/api/v1/users`, {
+      .get(`/booking/api/v1/users`, {
         headers: {
           Authorization: localStorage.getItem("jwtToken")
         },
@@ -76,9 +77,15 @@ export default {
         }
       })
       .then(response => {
+        if (vm.$refs.dataTable) {
+          vm.$refs.dataTable["loading"] = false;
+        }
         vm.hostUsers.data = response.data.content;
       })
       .catch(e => {
+        if (vm.$refs.dataTable) {
+          vm.$refs.dataTable["loading"] = false;
+        }
         console.log(e);
       });
   }

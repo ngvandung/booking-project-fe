@@ -79,7 +79,7 @@ export default {
     let vm = this;
     let userId = localStorage.getItem("userId");
     vm.$axios
-      .get(`http://localhost:8080/booking/api/v1/user/` + userId, {
+      .get(`/booking/api/v1/user/` + userId, {
         headers: {
           Authorization: localStorage.getItem("jwtToken")
         }

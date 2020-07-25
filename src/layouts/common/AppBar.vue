@@ -3,7 +3,7 @@
     <v-app-bar id="home-app-bar" app color="white" elevation="1" height="80">
       <router-link to="/">
         <v-img
-          src="@/assets/logo.png"
+          src="/static/images/favicon.ico"
           class="mr-3 hidden-xs-only"
           contain
           max-width="52"
@@ -63,7 +63,14 @@
         </template>
         <v-menu content-class="menu-setting-profile" offset-y>
           <template v-slot:activator="{ on }">
-            <v-chip style="height: 40px; padding: 15px;" class="ma-2" color="primary" v-on="on" outlined pill>
+            <v-chip
+              style="height: 40px; padding: 15px;"
+              class="ma-2"
+              color="primary"
+              v-on="on"
+              outlined
+              pill
+            >
               <v-avatar left>
                 <v-img :src="user.avatar"></v-img>
               </v-avatar>
@@ -108,11 +115,13 @@
 </template>
 
 <script>
+import HomeDrawer from "./Drawer";
+import Registry from "@/views/common/Registry.vue";
 export default {
   name: "HomeAppBar",
   components: {
-    HomeDrawer: () => import("./Drawer"),
-    Registry: () => import("@/views/common/Registry.vue")
+    HomeDrawer,
+    Registry,
   },
   data: () => ({
     user: {
@@ -126,7 +135,7 @@ export default {
       phone: "",
       birthDay: "",
       description: "",
-      avatar: ""
+      avatar: "",
     },
     profileMenu: [],
     drawer: null,
@@ -134,12 +143,12 @@ export default {
       { title: "Flight + Hotel", router: "/flighthotel" },
       { title: "Hotels & Homes", router: "/hotelhome" },
       { title: "Flights", router: "/flight" },
-      { title: "Today’s deals", router: "/deal" }
+      { title: "Today’s deals", router: "/deal" },
     ],
     isSign: false,
     username: "",
     isHost: false,
-    roleName: ""
+    roleName: "",
   }),
   methods: {
     logout() {
@@ -150,12 +159,12 @@ export default {
       let vm = this;
       let userId = localStorage.getItem("userId");
       vm.$axios
-        .get(`http://localhost:8080/booking/api/v1/user/` + userId, {
+        .get(`/booking/api/v1/user/` + userId, {
           headers: {
-            Authorization: localStorage.getItem("jwtToken")
-          }
+            Authorization: localStorage.getItem("jwtToken"),
+          },
         })
-        .then(response => {
+        .then((response) => {
           let hashSecret = response.data.hashSecret;
           let tmnCode = response.data.tmnCode;
           if (hashSecret && tmnCode) {
@@ -164,12 +173,12 @@ export default {
             vm.$router.push("/host/edit-account/profile");
           }
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
-    }
+    },
   },
-  created: function() {
+  created: function () {
     let vm = this;
     vm.isSign = localStorage.getItem("isSign") === "true" ? true : false;
     vm.username = localStorage.getItem("username");
@@ -182,34 +191,41 @@ export default {
         typeUser = "/host";
       } else if (vm.roleName == "ROLE_MANAGER") {
         typeUser = "/manager";
+      } else {
+        vm.profileMenu.push({
+          title: "My Bookings",
+          router: "/me/bookings?className=com.booking.model.Home",
+        });
       }
       vm.profileMenu.push({
         title: "Your Profile",
-        router: typeUser + "/edit-account/profile"
+        router: typeUser + "/edit-account/profile",
       });
       vm.profileMenu.push({ title: "Message", router: "" });
-      vm.profileMenu.push({ title: "Your Setting", router: "" });
+      //vm.profileMenu.push({ title: "Your Setting", router: "" });
       vm.profileMenu.push({ title: "Logout", router: "" });
     } else {
       vm.profileMenu.push({ title: "Logout", router: "" });
     }
 
     let userId = localStorage.getItem("userId");
-    vm.$axios
-      .get(`http://localhost:8080/booking/api/v1/user/` + userId, {
-        headers: {
-          Authorization: localStorage.getItem("jwtToken")
-        }
-      })
-      .then(response => {
-        if (response.data) {
-          vm.user = response.data;
-        }
-      })
-      .catch(e => {
-        vm.errors.push(e);
-      });
-  }
+    if (userId) {
+      vm.$axios
+        .get(`/booking/api/v1/user/` + userId, {
+          headers: {
+            Authorization: localStorage.getItem("jwtToken"),
+          },
+        })
+        .then((response) => {
+          if (response.data) {
+            vm.user = response.data;
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  },
 };
 </script>
 

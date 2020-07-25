@@ -1,5 +1,5 @@
 <template>
-  <data-table :dt="homes">
+  <data-table :dt="homes" ref="dataTable">
     <template v-slot:data-table-title>
       <v-chip class="ma-2" color="#2196F3" label outlined>Houses are pending</v-chip>
     </template>
@@ -53,9 +53,10 @@
 </template>
 
 <script>
+import DataTable from "@/components/DataTable.vue";
 export default {
   name: "ListHomeAdmin",
-  components: { DataTable: () => import("@/components/DataTable") },
+  components: { DataTable },
   data() {
     return {
       homes: {
@@ -76,7 +77,7 @@ export default {
       const options = {
         method: "PUT",
         headers: { Authorization: localStorage.getItem("jwtToken") },
-        url: "http://localhost:8080/booking/api/v1/home/action/" + _homeId,
+        url: "/booking/api/v1/home/action/" + _homeId,
         params: { status: _status }
       };
       vm.$axios(options)
@@ -113,15 +114,21 @@ export default {
     };
 
     vm.$axios
-      .post(`http://localhost:8080/booking/api/v1/_search`, query, {
+      .post(`/booking/api/v1/_search`, query, {
         headers: {
           Authorization: localStorage.getItem("jwtToken")
         }
       })
       .then(response => {
+        if (vm.$refs.dataTable) {
+          vm.$refs.dataTable["loading"] = false;
+        }
         vm.homes.data = response.data.hits.hits;
       })
       .catch(e => {
+        if (vm.$refs.dataTable) {
+          vm.$refs.dataTable["loading"] = false;
+        }
         console.log(e);
       });
   }

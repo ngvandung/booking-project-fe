@@ -1,11 +1,39 @@
 // Imports
 import Vue from 'vue'
 import Router from 'vue-router'
+import LayCoIndex from "@/layouts/common/Index.vue";
+import ViCoIndex from "@/views/common/Index.vue";
+import ViCoLogin from "@/views/common/Login.vue";
+import ViCoSearch from "@/views/common/Search.vue";
+import ViCoHome from "@/views/common/Home.vue";
+import ViCoVnPayRes from "@/views/common/VnPayResponse.vue";
+import ViCoPayment from "@/views/common/Payment.vue";
+import ViCoHotelHome from "@/views/common/HotelHome.vue";
+import LayUIndex from "@/layouts/user/Index.vue";
+import ViUIndex from "@/views/user/Index.vue";
+import ViUBookings from "@/views/user/MyBookings.vue";
+import CompProfile from "@/components/Profile.vue";
+import LayHostIndex from "@/layouts/host/Index.vue";
+import ViHostIndex from "@/views/host/Index.vue";
+import ViHostDashboard from "@/views/host/Dashboard.vue";
+import ViHostListHome from "@/views/host/ListHome.vue";
+import ViHostHome from "@/views/host/Home.vue";
+//import ViErPer from "@/views/error/PermissionDenied.vue";
+import LayManIndex from "@/layouts/manager/Index.vue";
+import ViManIndex from "@/views/manager/Index.vue";
+import ViManDashboard from "@/views/manager/Dashboard.vue";
+import ViManListHome from "@/views/manager/ListHome.vue";
+import ViManListHost from "@/views/manager/ListHost.vue";
+import LayAdIndex from "@/layouts/admin/Index.vue";
+import ViAdIndex from "@/views/admin/Index.vue";
+import ViAdDashboard from "@/views/admin/Dashboard.vue";
+import ViAdListUser from "@/views/admin/ListUser.vue";
+import ViAdIndexing from "@/views/admin/Indexing.vue";
+import ViHostDetailBookings from "@/views/host/DetailBookings.vue";
 
 Vue.use(Router)
 
 const router = new Router({
-    mode: 'history',
     base: process.env.BASE_URL,
     scrollBehavior: (to, from, savedPosition) => {
         if (to.hash) return { selector: to.hash }
@@ -16,66 +44,66 @@ const router = new Router({
     routes: [
         {
             path: '/',
-            component: () => import('@/layouts/common/Index.vue'),
+            component: LayCoIndex,
             children: [
                 {
                     path: '',
                     name: 'Home',
-                    component: () => import('@/views/common/Index.vue')
+                    component: ViCoIndex
                 },
                 {
                     path: '/login',
                     name: 'Login',
-                    component: () => import('@/views/common/Login.vue')
+                    component: ViCoLogin
                 },
                 {
                     path: '/search',
                     name: 'Search',
-                    component: () => import('@/views/common/Search.vue')
+                    component: ViCoSearch
                 },
                 {
                     path: '/home/:homeId',
                     name: 'CommonHome',
-                    component: () => import('@/views/common/Home.vue')
+                    component: ViCoHome
                 },
                 {
                     path: '/vnpay/response',
                     name: 'VnPayResponse',
-                    component: () => import('@/views/common/VnPayResponse.vue')
+                    component: ViCoVnPayRes
                 },
                 {
                     path: '/home/payment',
                     name: 'PaymentView',
                     props: true,
-                    component: () => import('@/views/common/Payment.vue')
+                    component: ViCoPayment
                 },
                 {
                     path: '/hotelhome',
                     name: 'HotelHome',
-                    component: () => import('@/views/common/HotelHome.vue')
+                    component: ViCoHotelHome
                 }
             ]
         },
         {
             path: '/me',
-            component: () => import('@/layouts/user/Index.vue'),
+            component: LayUIndex,
             children: [
                 {
                     path: '',
                     name: 'Me',
                     redirect: '/me/bookings',
-                    component: () => import('@/views/user/Index.vue'),
+                    component: ViUIndex,
                     children: [
                         {
                             path: '/me/bookings',
                             name: 'MyBookings',
-                            component: () => import('@/views/user/MyBookings.vue')
+                            component: ViUBookings
                         },
                         {
                             path: '/me/edit-account/profile',
                             name: 'UserProfile',
                             props: true,
-                            component: () => import('@/components/Profile.vue')
+                            component: CompProfile
                         }
                     ]
                 }
@@ -83,76 +111,81 @@ const router = new Router({
         },
         {
             path: '/host',
-            component: () => import('@/layouts/host/Index.vue'),
+            component: LayHostIndex,
             children: [
                 {
                     path: '',
                     name: 'Host',
                     redirect: '/host/dashboard',
-                    component: () => import('@/views/host/Index.vue'),
+                    component: ViHostIndex,
                     children: [
                         {
                             path: '/host/dashboard',
                             name: 'DashboardHost',
-                            component: () => import('@/views/host/Dashboard.vue')
+                            component: ViHostDashboard
                         },
                         {
                             path: '/host/homes',
                             name: 'ListHomeHost',
-                            component: () => import('@/views/host/ListHome.vue')
+                            component: ViHostListHome
                         },
                         {
                             path: '/host/home/',
                             name: 'HostHome',
-                            component: () => import('@/views/host/Home.vue')
+                            component: ViHostHome
                         },
                         {
                             path: '/host/home/:homeId',
                             name: 'HostHomeDetail',
-                            component: () => import('@/views/host/Home.vue')
+                            component: ViHostHome
                         },
                         {
                             path: '/host/edit-account/profile',
                             name: 'HostProfile',
-                            component: () => import('@/components/Profile.vue')
+                            component: CompProfile
+                        },
+                        {
+                            path: '/host/detail/bookings',
+                            name: 'DetailBookings',
+                            component: ViHostDetailBookings
                         }
                     ]
                 }
             ]
         },
-        {
-            path: '/error/403',
-            name: 'PermissionDenied',
-            component: () => import('@/views/error/PermissionDenied.vue')
-        },
+        // {
+        //     path: '/error/403',
+        //     name: 'PermissionDenied',
+        //     component: ViErPer
+        // },
         {
             path: '/manager',
-            component: () => import('@/layouts/manager/Index.vue'),
+            component: LayManIndex,
             children: [
                 {
                     path: '',
                     redirect: '/manager/dashboard',
-                    component: () => import('@/views/manager/Index.vue'),
+                    component: ViManIndex,
                     children: [
                         {
                             path: '/manager/dashboard',
                             name: 'ManagerDashboard',
-                            component: () => import('@/views/manager/Dashboard.vue')
+                            component: ViManDashboard
                         },
                         {
                             path: '/manager/homes',
                             name: 'ListHomeManager',
-                            component: () => import('@/views/manager/ListHome.vue')
+                            component: ViManListHome
                         },
                         {
                             path: '/manager/hosts',
                             name: 'ListHostManager',
-                            component: () => import('@/views/manager/ListHost.vue')
+                            component: ViManListHost
                         },
                         {
                             path: '/manager/edit-account/profile',
                             name: 'ManagerProfile',
-                            component: () => import('@/components/Profile.vue')
+                            component: CompProfile
                         }
                     ]
                 }
@@ -160,33 +193,33 @@ const router = new Router({
         },
         {
             path: '/admin',
-            component: () => import('@/layouts/admin/Index.vue'),
+            component: LayAdIndex,
             children: [
                 {
                     path: '',
                     redirect: '/admin/dashboard',
-                    component: () => import('@/views/admin/Index.vue'),
+                    component: ViAdIndex,
                     children: [
                         {
                             path: '/admin/dashboard',
                             name: 'AdminDashboard',
-                            component: () => import('@/views/admin/Dashboard.vue')
+                            component: ViAdDashboard
                         },
                         {
                             path: '/admin/users',
                             name: 'ListUser',
-                            component: () => import('@/views/admin/ListUser.vue')
+                            component: ViAdListUser
                         },
                         {
                             path: '/admin/indexing',
                             name: 'Indexing',
-                            component: () => import('@/views/admin/Indexing.vue')
+                            component: ViAdIndexing
                         }
                     ]
                 }
             ]
         }
-    ],
+    ]
 })
 
 export default router

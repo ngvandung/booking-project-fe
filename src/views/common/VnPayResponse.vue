@@ -58,7 +58,7 @@ export default {
     let array = currentUrl.split("?");
     vm.$axios
       .get(
-        `http://localhost:8080/booking/api/v1/vnpay/confirm/` +
+        `/booking/api/v1/vnpay/confirm/` +
           bookingId +
           "?" +
           array[1]

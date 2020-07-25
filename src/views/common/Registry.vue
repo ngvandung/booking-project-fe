@@ -90,7 +90,7 @@ export default {
         vm.user.isHost = 0;
       }
       vm.$axios
-        .post(`http://localhost:8080/booking/api/v1/user`, vm.user)
+        .post(`/booking/api/v1/user`, vm.user)
         .then(response => {
           if (response.data.userId) {
             alert("Registry successfully");

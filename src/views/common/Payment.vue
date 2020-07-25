@@ -136,7 +136,7 @@ export default {
       return new Promise((resolve, reject) => {
         vm.$axios
           .get(
-            `http://localhost:8080/booking/api/v1/image/com.booking.model.Home/` +
+            `/booking/api/v1/image/com.booking.model.Home/` +
               homeId
           )
           .then(function(response) {
@@ -157,7 +157,7 @@ export default {
       vm.booking.stateId = vm.state.selected.stateId;
       vm.booking.stateName = vm.state.selected.stateName;
       vm.$axios
-        .post(`http://localhost:8080/booking/api/v1/booking/home`, vm.booking, {
+        .post(`/booking/api/v1/booking/home`, vm.booking, {
           headers: {
             Authorization: localStorage.getItem("jwtToken")
           }
@@ -190,7 +190,7 @@ export default {
     }
 
     vm.$axios
-      .get(`http://localhost:8080/booking/api/v1/states`, {
+      .get(`/booking/api/v1/states`, {
         params: { start: 0, end: 5000 }
       })
       .then(response => {
@@ -200,7 +200,7 @@ export default {
         console.log(e);
       });
     vm.$axios
-      .get(`http://localhost:8080/booking/api/v1/home/` + classPK, {
+      .get(`/booking/api/v1/home/` + classPK, {
         headers: {
           Authorization: localStorage.getItem("jwtToken")
         }
@@ -209,7 +209,7 @@ export default {
         let image = await vm.callAPI(response.data.homeId);
         vm.targetPayment = response.data;
         vm.targetPayment.avt =
-          "http://localhost:8080/booking/images/" + image[0];
+          "/booking/images/" + image[0];
       })
       .catch(e => {
         console.log(e);

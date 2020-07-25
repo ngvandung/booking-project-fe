@@ -1,23 +1,18 @@
 <template>
   <v-app>
-    <admin-app-bar />
-
     <base-view />
-
-    <Footer />
   </v-app>
 </template>
 
 <script>
+import BaseView from "@/components/BaseView";
 export default {
   name: "AdminLayout",
 
   components: {
-    AdminAppBar: () => import("@/layouts/admin/AppBar"),
-    Footer: () => import("@/components/Footer"),
-    BaseView: () => import("@/components/BaseView")
+    BaseView,
   },
-  beforeCreate: function() {
+  beforeCreate: function () {
     let vm = this;
     if (
       localStorage.getItem("isSign") != "true" ||
@@ -25,10 +20,9 @@ export default {
     ) {
       vm.$router.replace("/error/403");
     }
-  }
+  },
 };
 </script>
 
 <style>
-
 </style>
