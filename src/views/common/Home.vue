@@ -433,8 +433,24 @@ export default {
                   },
                 },
                 {
-                  match: {
-                    bookingStatus: "renting",
+                  bool: {
+                    should: [
+                      {
+                        match: {
+                          bookingStatus: "renting",
+                        },
+                      },
+                      {
+                        match: {
+                          bookingStatus: "cancel_pending",
+                        },
+                      },
+                      {
+                        match: {
+                          bookingStatus: "cancel_failed",
+                        },
+                      },
+                    ],
                   },
                 },
                 {
@@ -451,8 +467,8 @@ export default {
                       {
                         range: {
                           toDate: {
-                            lte: vm.toTimestamp(vm.date.fromDate),
-                            gte: vm.toTimestamp(vm.date.toDate),
+                            gte: vm.toTimestamp(vm.date.fromDate),
+                            lte: vm.toTimestamp(vm.date.toDate),
                           },
                         },
                       },
@@ -664,8 +680,24 @@ export default {
                     },
                   },
                   {
-                    match: {
-                      bookingStatus: "renting",
+                    bool: {
+                      should: [
+                        {
+                          match: {
+                            bookingStatus: "renting",
+                          },
+                        },
+                        {
+                          match: {
+                            bookingStatus: "cancel_pending",
+                          },
+                        },
+                        {
+                          match: {
+                            bookingStatus: "cancel_failed",
+                          },
+                        },
+                      ],
                     },
                   },
                   {
@@ -682,8 +714,8 @@ export default {
                         {
                           range: {
                             toDate: {
-                              lte: vm.toTimestamp(vm.date.fromDate),
-                              gte: vm.toTimestamp(vm.date.toDate),
+                              gte: vm.toTimestamp(vm.date.fromDate),
+                              lte: vm.toTimestamp(vm.date.toDate),
                             },
                           },
                         },

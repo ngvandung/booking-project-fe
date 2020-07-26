@@ -22,7 +22,8 @@
       :items="dt.data"
       :items-per-page="5"
       :search="search"
-      :loading="loading" loading-text="Loading... Please wait"
+      :loading="loading"
+      loading-text="Loading... Please wait"
       class="elevation-1"
     >
       <template v-slot:item.name="props">
@@ -37,6 +38,10 @@
         <slot :item="props.item" name="status-house"></slot>
       </template>
 
+      <template v-slot:item.bookingStatus="props">
+        <slot :item="props.item" name="status-booking"></slot>
+      </template>
+      
       <template v-slot:item.actions="props">
         <slot :item="props.item" name="data-table-action"></slot>
       </template>
@@ -66,7 +71,7 @@ export default {
   data() {
     return {
       loading: true,
-      search: ""
+      search: "",
     };
   },
 };

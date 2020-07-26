@@ -12,11 +12,11 @@
         </template>
         <v-list>
           <v-list-item-group color="primary">
-            <v-list-item>
+            <v-list-item style="min-height: 30px!important;">
               <span class="material-icons">check</span>
               <v-btn small text v-on:click="actionUserRoleHost(slotProps.item.userId, 1)">Active</v-btn>
             </v-list-item>
-            <v-list-item>
+            <v-list-item style="min-height: 30px!important;">
               <span class="material-icons">visibility_off</span>
               <v-btn small text v-on:click="actionUserRoleHost(slotProps.item.userId, 0)">Disable</v-btn>
             </v-list-item>
