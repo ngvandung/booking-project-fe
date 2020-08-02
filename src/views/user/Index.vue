@@ -16,8 +16,8 @@ export default {
             icon: "assignment",
             subMenus: [
               {
-                title: "Home",
-                router: "/me/bookings?className=com.booking.model.Home"
+                title: "House",
+                router: "/me/bookings?className=com.booking.model.House"
               },
               {
                 title: "Test",

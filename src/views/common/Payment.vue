@@ -131,13 +131,13 @@ export default {
       let val = (value / 1).toFixed().replace(".", ",");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
-    callAPI(homeId) {
+    callAPI(houseId) {
       let vm = this;
       return new Promise((resolve, reject) => {
         vm.$axios
           .get(
-            `/booking/api/v1/image/com.booking.model.Home/` +
-              homeId
+            `/booking/api/v1/image/com.booking.model.House/` +
+              houseId
           )
           .then(function(response) {
             resolve(response.data.data);
@@ -157,7 +157,7 @@ export default {
       vm.booking.stateId = vm.state.selected.stateId;
       vm.booking.stateName = vm.state.selected.stateName;
       vm.$axios
-        .post(`/booking/api/v1/booking/home`, vm.booking, {
+        .post(`/booking/api/v1/booking/house`, vm.booking, {
           headers: {
             Authorization: localStorage.getItem("jwtToken")
           }
@@ -200,13 +200,13 @@ export default {
         console.log(e);
       });
     vm.$axios
-      .get(`/booking/api/v1/home/` + classPK, {
+      .get(`/booking/api/v1/house/` + classPK, {
         headers: {
           Authorization: localStorage.getItem("jwtToken")
         }
       })
       .then(async response => {
-        let image = await vm.callAPI(response.data.homeId);
+        let image = await vm.callAPI(response.data.houseId);
         vm.targetPayment = response.data;
         vm.targetPayment.avt =
           "/booking/images/" + image[0];

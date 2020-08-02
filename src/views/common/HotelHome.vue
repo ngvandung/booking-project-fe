@@ -11,14 +11,14 @@ export default {
   data() {
     return {
       query: {
-        indice: "Home",
+        indice: "House",
         size: "10000",
         query: {
           bool: {
             must: [
               {
                 match: {
-                  _type: "Home"
+                  _type: "House"
                 }
               },
               {

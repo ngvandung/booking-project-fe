@@ -8,7 +8,7 @@ export default {
   components: { ListHouse },
   data() {
     return {
-      homes: [],
+      houses: [],
       textSearch: this.$route.query.text,
       from: this.$route.query.from,
       to: this.$route.query.to,
@@ -19,14 +19,14 @@ export default {
   created: function() {
     let vm = this;
     var query = {
-      indice: "Home",
+      indice: "House",
       size: "10000",
       query: {
         bool: {
           must: [
             {
               match: {
-                _type: "Home"
+                _type: "House"
               }
             },
             {

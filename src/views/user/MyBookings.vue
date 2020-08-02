@@ -28,7 +28,7 @@
     <template v-slot:route-link-house="slotProps">
       <router-link
         style="text-decoration: none; color: rgba(0, 0, 0, 0.87);"
-        :to="{name: 'CommonHome', params: {homeId: slotProps.item.homeId}}"
+        :to="{name: 'CommonHouse', params: {houseId: slotProps.item.houseId}}"
       >
         <span>{{ slotProps.item.name }}</span>
       </router-link>
@@ -143,8 +143,28 @@ export default {
           console.log(err);
         });
     },
-    requestToCancel(bookingId) {
+    async requestToCancel(bookingId) {
       let vm = this;
+      let userId = localStorage.getItem("userId");
+
+      await vm.$axios
+        .get(`/booking/api/v1/user/` + userId, {
+          headers: {
+            Authorization: localStorage.getItem("jwtToken"),
+          },
+        })
+        .then((response) => {
+          let hashSecret = response.data.hashSecret;
+          let tmnCode = response.data.tmnCode;
+          if (!hashSecret || !tmnCode) {
+            vm.$router.push("/me/edit-account/profile");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          vm.$router.push("/me/edit-account/profile");
+        });
+
       vm.$axios
         .post("/booking/api/v1/booking/cancelrequest/" + bookingId, null, {
           headers: {

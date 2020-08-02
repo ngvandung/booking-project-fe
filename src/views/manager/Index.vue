@@ -26,9 +26,9 @@ export default {
             icon: "supervisor_account",
           },
           {
-            title: "Home Pending",
-            router: "/manager/homes",
-            icon: "home",
+            title: "House Pending",
+            router: "/manager/houses",
+            icon: "house",
           },
         ],
       },

@@ -35,12 +35,12 @@ export default {
           api: "/booking/api/v1/village/indexing"
         },
         {
-          title: "Home Type",
-          api: "/booking/api/v1/hometype/indexing"
+          title: "House Type",
+          api: "/booking/api/v1/housetype/indexing"
         },
         {
-          title: "Home",
-          api: "/booking/api/v1/home/indexing"
+          title: "House",
+          api: "/booking/api/v1/house/indexing"
         },
         {
           title: "User",

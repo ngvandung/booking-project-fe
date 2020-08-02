@@ -42,43 +42,43 @@
       <v-divider></v-divider>
       <v-row>
         <v-col
-          class="home-preview"
-          v-for="home in homes"
-          :key="home._source.homeId"
+          class="house-preview"
+          v-for="house in houses"
+          :key="house._source.houseId"
           style="max-width: 20%;"
         >
           <router-link
             style="text-decoration: none;"
-            :to="{name: 'CommonHome', params: {homeId: home._source.homeId}}"
+            :to="{name: 'CommonHouse', params: {houseId: house._source.houseId}}"
           >
             <v-item>
               <v-card class="mx-auto my-12" max-width="374">
-                <v-img height="200" :src="home._source.avt"></v-img>
+                <v-img height="200" :src="house._source.avt"></v-img>
                 <v-card-title
                   class="title text-truncate"
                   style="font-size: 1rem!important; padding: 0 16px; font-weight: 900;"
-                >{{home._source.name}}</v-card-title>
+                >{{house._source.name}}</v-card-title>
                 <v-card-text style="padding: 0px 16px;">
                   <v-row align="center" class="mx-0">
                     <v-rating :value="4.5" color="amber" dense half-increments readonly size="13"></v-rating>
                     <div
                       class="grey--text ml-4"
                       style="font-size: 13px;"
-                    >4.5 ({{home._source.countVote}})</div>
+                    >4.5 ({{house._source.countVote}})</div>
                   </v-row>
                   <div
                     class="my-4 subtitle-1 font-weight-bold"
                     style="font-size: .875rem!important; margin-top: 0!important; margin-bottom: 0!important; font-weight: 900!important; color: black;"
-                  >{{formatPrice(home._source.price)}}$/night</div>
+                  >{{formatPrice(house._source.price)}}$/night</div>
                   <div
                     class="text-truncate"
                     style="padding: 5px 0; color: black;"
-                  >{{home._source.villageName}}, {{home._source.districtName}}, {{home._source.cityName}}, {{home._source.stateName}}</div>
+                  >{{house._source.villageName}}, {{house._source.districtName}}, {{house._source.cityName}}, {{house._source.stateName}}</div>
                 </v-card-text>
                 <v-divider class="mx-4"></v-divider>
                 <v-card-text
                   style="font-size: 13px; padding: 5px 16px"
-                >{{home._source.maxGuest}} guests • {{home._source.bathroom}} Bathroom • {{home._source.bedroom}} Bedroom</v-card-text>
+                >{{house._source.maxGuest}} guests • {{house._source.bathroom}} Bathroom • {{house._source.bedroom}} Bedroom</v-card-text>
               </v-card>
             </v-item>
           </router-link>
@@ -99,7 +99,7 @@ export default {
   },
   data() {
     return {
-      homes: [],
+      houses: [],
       search: null,
       loading: false,
       dropdownSearchs: [
@@ -115,9 +115,9 @@ export default {
     vm.$axios
       .post(`/booking/api/v1/_search`, vm.query)
       .then(async (response) => {
-        for (let home of response.data.hits.hits) {
-          let image = await vm.callAPI(home._source.homeId);
-          home._source.avt = "/booking/images/" + image[0];
+        for (let house of response.data.hits.hits) {
+          let image = await vm.callAPI(house._source.houseId);
+          house._source.avt = "/booking/images/" + image[0];
 
           let queryVote = {
             indice: "Voting",
@@ -132,12 +132,12 @@ export default {
                   },
                   {
                     match: {
-                      className: "com.booking.model.Home",
+                      className: "com.booking.model.House",
                     },
                   },
                   {
                     match: {
-                      classPK: home._source.homeId,
+                      classPK: house._source.houseId,
                     },
                   },
                 ],
@@ -147,13 +147,13 @@ export default {
           await vm.$axios
             .post(`/booking/api/v1/_search`, queryVote)
             .then((response) => {
-              home._source.countVote = response.data.hits.hits.length;
+              house._source.countVote = response.data.hits.hits.length;
             })
             .catch((err) => {
               console.log(err);
             });
 
-          vm.homes.push(home);
+          vm.houses.push(house);
         }
       })
       .catch((err) => {
@@ -179,11 +179,11 @@ export default {
       let val = (value / 1).toFixed().replace(".", ",");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
-    callAPI(homeId) {
+    callAPI(houseId) {
       let vm = this;
       return new Promise((resolve, reject) => {
         vm.$axios
-          .get(`/booking/api/v1/image/com.booking.model.Home/` + homeId)
+          .get(`/booking/api/v1/image/com.booking.model.House/` + houseId)
           .then(function (response) {
             resolve(response.data.data);
           })
@@ -197,14 +197,14 @@ export default {
       //let keywordSearch = vm.search;
       vm.loading = true;
       var query = {
-        indice: "Home",
+        indice: "House",
         size: "10000",
         query: {
           bool: {
             must: [
               {
                 match: {
-                  _type: "Home",
+                  _type: "House",
                 },
               },
               {
@@ -218,14 +218,14 @@ export default {
       };
       if (keywordSearch) {
         query = {
-          indice: "Home",
+          indice: "House",
           size: "10000",
           query: {
             bool: {
               must: [
                 {
                   match: {
-                    _type: "Home",
+                    _type: "House",
                   },
                 },
                 {
@@ -257,10 +257,10 @@ export default {
       vm.$axios
         .post(`/booking/api/v1/_search`, query)
         .then(async (response) => {
-          vm.homes = [];
-          for (let home of response.data.hits.hits) {
-            let image = await vm.callAPI(home._source.homeId);
-            home._source.avt = "/booking/images/" + image[0];
+          vm.houses = [];
+          for (let house of response.data.hits.hits) {
+            let image = await vm.callAPI(house._source.houseId);
+            house._source.avt = "/booking/images/" + image[0];
 
             let queryVote = {
               indice: "Voting",
@@ -275,12 +275,12 @@ export default {
                     },
                     {
                       match: {
-                        className: "com.booking.model.Home",
+                        className: "com.booking.model.House",
                       },
                     },
                     {
                       match: {
-                        classPK: home._source.homeId,
+                        classPK: house._source.houseId,
                       },
                     },
                   ],
@@ -290,13 +290,13 @@ export default {
             await vm.$axios
               .post(`/booking/api/v1/_search`, queryVote)
               .then((response) => {
-                home._source.countVote = response.data.hits.hits.length;
+                house._source.countVote = response.data.hits.hits.length;
               })
               .catch((err) => {
                 console.log(err);
               });
 
-            vm.homes.push(home);
+            vm.houses.push(house);
           }
           vm.loading = false;
         })
@@ -309,7 +309,7 @@ export default {
 </script>
 
 <style>
-.home-preview .my-12 {
+.house-preview .my-12 {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }

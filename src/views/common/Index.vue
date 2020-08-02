@@ -41,7 +41,7 @@
                         height="85"
                         hide-details="auto"
                         placeholder="Enter a destination or property"
-                        v-on:keyup.enter="searchHome()"
+                        v-on:keyup.enter="searchHouse()"
                         outlined
                       />
                     </v-row>
@@ -117,7 +117,7 @@
                         height="85"
                         width="180"
                         color="primary"
-                        v-on:click="searchHome()"
+                        v-on:click="searchHouse()"
                       >SEARCH</v-btn>
                     </v-row>
                   </v-container>
@@ -179,7 +179,7 @@ export default {
     };
   },
   methods: {
-    searchHome() {
+    searchHouse() {
       let vm = this;
       let link = "/search";
       if (link === "/search" && vm.search.textSearch) {

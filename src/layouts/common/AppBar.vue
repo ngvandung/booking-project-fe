@@ -194,7 +194,7 @@ export default {
       } else {
         vm.profileMenu.push({
           title: "My Bookings",
-          router: "/me/bookings?className=com.booking.model.Home",
+          router: "/me/bookings?className=com.booking.model.House",
         });
       }
       vm.profileMenu.push({

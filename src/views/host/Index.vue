@@ -11,7 +11,7 @@ export default {
       tabs: {
         items: [
           { title: "Dashboard", router: "/host/dashboard", icon: "dashboard" },
-          { title: "My Homes", router: "/host/homes", icon: "home" },
+          { title: "My Houses", router: "/host/houses", icon: "house" },
           {
             title: "Account Setting",
             router: "/host/edit-account/profile",

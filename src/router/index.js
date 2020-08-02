@@ -5,7 +5,7 @@ import LayCoIndex from "@/layouts/common/Index.vue";
 import ViCoIndex from "@/views/common/Index.vue";
 import ViCoLogin from "@/views/common/Login.vue";
 import ViCoSearch from "@/views/common/Search.vue";
-import ViCoHome from "@/views/common/Home.vue";
+import ViCoHouse from "@/views/common/House.vue";
 import ViCoVnPayRes from "@/views/common/VnPayResponse.vue";
 import ViCoPayment from "@/views/common/Payment.vue";
 import ViCoHotelHome from "@/views/common/HotelHome.vue";
@@ -16,13 +16,13 @@ import CompProfile from "@/components/Profile.vue";
 import LayHostIndex from "@/layouts/host/Index.vue";
 import ViHostIndex from "@/views/host/Index.vue";
 import ViHostDashboard from "@/views/host/Dashboard.vue";
-import ViHostListHome from "@/views/host/ListHome.vue";
-import ViHostHome from "@/views/host/Home.vue";
+import ViHostListHouse from "@/views/host/ListHouse.vue";
+import ViHostHouse from "@/views/host/House.vue";
 //import ViErPer from "@/views/error/PermissionDenied.vue";
 import LayManIndex from "@/layouts/manager/Index.vue";
 import ViManIndex from "@/views/manager/Index.vue";
 import ViManDashboard from "@/views/manager/Dashboard.vue";
-import ViManListHome from "@/views/manager/ListHome.vue";
+import ViManListHouse from "@/views/manager/ListHouse.vue";
 import ViManListHost from "@/views/manager/ListHost.vue";
 import LayAdIndex from "@/layouts/admin/Index.vue";
 import ViAdIndex from "@/views/admin/Index.vue";
@@ -62,9 +62,9 @@ const router = new Router({
                     component: ViCoSearch
                 },
                 {
-                    path: '/home/:homeId',
-                    name: 'CommonHome',
-                    component: ViCoHome
+                    path: '/house/:houseId',
+                    name: 'CommonHouse',
+                    component: ViCoHouse
                 },
                 {
                     path: '/vnpay/response',
@@ -72,7 +72,7 @@ const router = new Router({
                     component: ViCoVnPayRes
                 },
                 {
-                    path: '/home/payment',
+                    path: '/house/payment',
                     name: 'PaymentView',
                     props: true,
                     component: ViCoPayment
@@ -125,19 +125,19 @@ const router = new Router({
                             component: ViHostDashboard
                         },
                         {
-                            path: '/host/homes',
-                            name: 'ListHomeHost',
-                            component: ViHostListHome
+                            path: '/host/houses',
+                            name: 'ListHouseHost',
+                            component: ViHostListHouse
                         },
                         {
-                            path: '/host/home/',
-                            name: 'HostHome',
-                            component: ViHostHome
+                            path: '/host/house/',
+                            name: 'HostHouse',
+                            component: ViHostHouse
                         },
                         {
-                            path: '/host/home/:homeId',
-                            name: 'HostHomeDetail',
-                            component: ViHostHome
+                            path: '/host/house/:houseId',
+                            name: 'HostHouseDetail',
+                            component: ViHostHouse
                         },
                         {
                             path: '/host/edit-account/profile',
@@ -173,9 +173,9 @@ const router = new Router({
                             component: ViManDashboard
                         },
                         {
-                            path: '/manager/homes',
-                            name: 'ListHomeManager',
-                            component: ViManListHome
+                            path: '/manager/houses',
+                            name: 'ListHouseManager',
+                            component: ViManListHouse
                         },
                         {
                             path: '/manager/hosts',

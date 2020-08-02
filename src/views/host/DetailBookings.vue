@@ -1,5 +1,5 @@
 <template>
-  <data-table :dt="dataHome" ref="dataTable">
+  <data-table :dt="dataHouse" ref="dataTable">
     <template v-slot:data-table-qrcode="slotProps">
       <v-dialog v-model="dialog" width="500">
         <template v-slot:activator="{ on, attrs }">
@@ -61,7 +61,7 @@ export default {
   components: { DataTable: () => import("@/components/DataTable") },
   data() {
     return {
-      dataHome: {
+      dataHouse: {
         headers: [
           { text: "Renter name", value: "fullName" },
           { text: "Date From", value: "fromDate" },
@@ -98,7 +98,7 @@ export default {
         if (vm.$refs.dataTable) {
           vm.$refs.dataTable["loading"] = false;
         }
-        vm.dataHome.data = array;
+        vm.dataHouse.data = array;
       })
       .catch((e) => {
         if (vm.$refs.dataTable) {
@@ -122,8 +122,13 @@ export default {
       };
       vm.$axios(options)
         .then((response) => {
-          if (response.data.bookingId) {
-            alert("done");
+          if (response.data.code === "00") {
+            if (!window.vnpay) {
+              window.location.href = response.data.data;
+            }
+            return false;
+          } else {
+            alert(response.data.message);
           }
         })
         .catch((e) => {
